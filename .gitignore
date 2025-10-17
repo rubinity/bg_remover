@@ -1,0 +1,4 @@
+notes.txt
+.venv
+app/output/i.jpg
+app/__pycache__*
