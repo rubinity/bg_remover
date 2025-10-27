@@ -1,4 +1,4 @@
 notes.txt
 .venv
-app/output/i.jpg
+app/output
 app/__pycache__*
