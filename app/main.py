@@ -5,6 +5,7 @@ from skimage import data, io
 import numpy as np
 from .src.U2Net.u2net_mask import create_mask
 
+# goes to an endpoint
 def main():
     args = add_args()
     [image_file_path, output_path] = get_path(args)
@@ -14,6 +15,9 @@ def main():
         image_orig[img_mask[:,:,:] < 80] = 255
         # todo: improve thresholding method
         io.imsave(output_path, image_orig)
+
+# create a main for fastapi
+
 
 if __name__ == "__main__":
     main()

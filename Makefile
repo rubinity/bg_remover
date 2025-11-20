@@ -14,11 +14,11 @@ run_dev:
 	docker run -v $(WORK_DIR):/usr/src -it $(IMAGE_NAME)
 
 clean:
-	docker rm -f $(IMAGE_NAME)_cont
+	docker rm -f $(IMAGE_NAME)p
 
 empty:
 	rm $(CURDIR)/app/output/*.jpg
-	
+
 fclean: clean
 	docker image rm $(IMAGE_NAME)
 
