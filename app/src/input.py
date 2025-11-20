@@ -11,6 +11,6 @@ def add_args():
 
 def get_path(args):
     module_path = str(Path(__file__).parent.parent)
-    image_path = module_path+'\\images\\'+ args.image
-    output_path = module_path+"\\output\\i.jpg"
-    return[image_path, output_path]
+    image_file_path = Path(module_path) / 'images' / args.image
+    output_path = Path(module_path) / "output" / args.image
+    return[image_file_path, output_path]
