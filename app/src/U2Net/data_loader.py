@@ -237,7 +237,7 @@ class SalObjDataset(Dataset):
 		# image = Image.open(self.image_name_list[idx])#io.imread(self.image_name_list[idx])
 		# label = Image.open(self.label_name_list[idx])#io.imread(self.label_name_list[idx])
 
-		image = io.imread(self.image_name_list[idx])
+		image = io.imread(self.image_name_list[idx]) #
 		imname = self.image_name_list[idx]
 		imidx = np.array([idx])
 
