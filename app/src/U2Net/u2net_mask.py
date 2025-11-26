@@ -53,6 +53,7 @@ def create_mask(image_file_path, shape):
 
     # --------- 2. dataloader ---------
     #1. dataloader
+    # img_name_list should be the list of files, for now one file
     test_salobj_dataset = SalObjDataset(img_name_list = img_name_list,
                                         lbl_name_list = [],
                                         transform=transforms.Compose([RescaleT(320),
