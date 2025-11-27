@@ -17,10 +17,15 @@ Note: The first Docker build may take several minutes as it downloads and instal
 
 ---
 ## Table of Contents
-1. [About](#about)  
-2. [Installation](#installation)  
-3. [Usage](#usage)
-4. [Other](#other) 
+- [bg\_remover](#bg_remover)
+  - [Current state](#current-state)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Installation](#installation)
+      - [Windows:](#windows)
+      - [Linux:](#linux)
+  - [Usage](#usage)
+  - [Other](#other)
 
 
 
@@ -31,8 +36,38 @@ Note: The first Docker build may take several minutes as it downloads and instal
 ---
 ## Installation
 
+- ### For virtual environment
+#### Windows:
+- py -3.10 -m venv .venv310
+- .venv310\Scripts\activate
+- pip install -r requirements.txt
+#### Linux:
+- ### using Docker
+
+
 ---
 ## Usage
 
 ---
 ## Other
+
+
+
+## TODOS
+-> Entrypoint  which is the app object running using the FastApi() framework
+
+USER -> wants to use your application
+-----------
+-> FRONTEND your website -> CALL API to give behavior.
+Your code which contains the BEHAVIOUR is in python your frontend is in Javascript.
+
+----------------------------------------APP idea
+FRONTEND -----> FASTAPI------ BACKEND
+you can send the image. 
+localhost:8001/background-remover FASTAPI answer and call the script.
+The backend is the scrip that create the Response.
+FASTAPI --> return the Response to the FRONTEND;
+------------------------------------------------
+Frontend is an uploading image button -> that call FASTAPI and wait for response(MOST PROBABLY async funct) and show the response with download button
+------------------------------------------------
+Backend 
