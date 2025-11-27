@@ -1,7 +1,9 @@
 notes.txt
-requirements1.txt
+requirementsold*.txt
 ref.md
-.ven
+*.jpg
+.venv
+.venv310
 .devcontainer
 app/output
 app/__pycache__*

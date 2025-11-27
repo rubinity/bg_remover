@@ -17,10 +17,15 @@ Note: The first Docker build may take several minutes as it downloads and instal
 
 ---
 ## Table of Contents
-1. [About](#about)  
-2. [Installation](#installation)  
-3. [Usage](#usage)
-4. [Other](#other) 
+- [bg\_remover](#bg_remover)
+  - [Current state](#current-state)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+  - [Installation](#installation)
+      - [Windows:](#windows)
+      - [Linux:](#linux)
+  - [Usage](#usage)
+  - [Other](#other)
 
 
 
@@ -30,6 +35,15 @@ Note: The first Docker build may take several minutes as it downloads and instal
 
 ---
 ## Installation
+
+- ### For virtual environment
+#### Windows:
+- py -3.10 -m venv .venv310
+- .venv310\Scripts\activate
+- pip install -r requirements.txt
+#### Linux:
+- ### using Docker
+
 
 ---
 ## Usage

@@ -1,8 +1,9 @@
-FROM python:3.6-slim
+FROM python:3.10-slim
 
 WORKDIR /usr/src/
 ARG DOWNLOAD_PATH=./app/src/U2Net/saved_models/u2net
 # COPY ./U-2-Net .
+COPY notes.txt .
 COPY app ./app
 COPY requirements.txt .
 RUN apt-get update && apt-get install -y curl

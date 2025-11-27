@@ -6,7 +6,6 @@ from skimage import io, transform, color
 import numpy as np
 import random
 import math
-import matplotlib.pyplot as plt
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, utils
 from PIL import Image
@@ -222,9 +221,6 @@ class ToTensorLab(object):
 
 class SalObjDataset(Dataset):
 	def __init__(self,file_list,lbl_name_list,transform=None):
-		# self.root_dir = root_dir
-		# self.image_name_list = glob.glob(image_dir+'*.png')
-		# self.label_name_list = glob.glob(label_dir+'*.png')
 		self.file_list = file_list
 		self.label_name_list = lbl_name_list
 		self.transform = transform
@@ -237,7 +233,7 @@ class SalObjDataset(Dataset):
 		# image = Image.open(self.image_name_list[idx])#io.imread(self.image_name_list[idx])
 		# label = Image.open(self.label_name_list[idx])#io.imread(self.label_name_list[idx])
 
-		image = io.imread(self.file_list[idx]) #change the way file is converted into array
+		image = self.file_list[idx]
 		# imname = self.file_list[idx]
 		imidx = np.array([idx])
 

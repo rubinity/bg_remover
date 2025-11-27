@@ -42,19 +42,16 @@ def get_mask(pred,shape):
     pb_np = np.array(imo)#numpy.ndarray 3D
     return pb_np
 
-def create_mask(image_file_path, shape):
+def create_mask(image_orig):
 
     # --------- 1. get image path and name ---------
     model_name='u2net'#u2netp
-    prediction_dir = Path(image_file_path).parent.parent /"output"
     model_dir = Path(__file__).parent /"saved_models"/model_name/model_name
     model_file = model_dir.with_suffix('.pth')
-    img_name_list = glob.glob(str(Path(image_file_path)))#this will be one file list
 
     # --------- 2. dataloader ---------
     #1. dataloader
-    # img_name_list should be the list of files, for now one file
-    test_salobj_dataset = SalObjDataset(img_name_list = img_name_list,
+    test_salobj_dataset = SalObjDataset(file_list = [image_orig],
                                         lbl_name_list = [],
                                         transform=transforms.Compose([RescaleT(320),
                                                                       ToTensorLab(flag=0)])
@@ -96,9 +93,6 @@ def create_mask(image_file_path, shape):
     pred = d1[:,0,:,:]
     pred = normPRED(pred)
 
-        # save results to test_results folder
-    if not os.path.exists(prediction_dir):
-        os.makedirs(prediction_dir, exist_ok=True)
-    mask = get_mask(pred, shape) #returns mask
+    mask = get_mask(pred, image_orig.shape) #returns mask
     del d1,d2,d3,d4,d5,d6,d7
     return mask
