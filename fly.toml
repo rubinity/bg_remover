@@ -4,7 +4,7 @@
 #
 
 app = 'bg-remover-g-9whg'
-primary_region = 'iad'
+primary_region = 'fra'
 
 [build]
 
