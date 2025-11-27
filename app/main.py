@@ -8,9 +8,18 @@ from fastapi import APIRouter, FastAPI, File, UploadFile
 from pydantic import BaseModel
 from typing import Annotated
 from fastapi.responses import Response
+from fastapi.middleware.cors import CORSMiddleware
 import io
 
 app = FastAPI()
+# Allow CORS for all origins (you can restrict to specific domains if needed)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins (you can specify a list of domains here, e.g. ["http://localhost:3000"])
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 @app.get("/")
 async def root():
@@ -48,8 +57,9 @@ async def create_file(file: Annotated[bytes, File()]):
     #     with Image.open(stream) as img:
     #         image_orig = np.array(img)
     #         upfile = get_bytes(img)
-        
-    return Response(content=upfile)
+    
+    return Response(content=upfile, media_type="image/jpeg")
+
 
 
     # return {"message": "tft"}

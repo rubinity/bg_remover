@@ -50,3 +50,24 @@ Note: The first Docker build may take several minutes as it downloads and instal
 
 ---
 ## Other
+
+
+
+## TODOS
+-> Entrypoint  which is the app object running using the FastApi() framework
+
+USER -> wants to use your application
+-----------
+-> FRONTEND your website -> CALL API to give behavior.
+Your code which contains the BEHAVIOUR is in python your frontend is in Javascript.
+
+----------------------------------------APP idea
+FRONTEND -----> FASTAPI------ BACKEND
+you can send the image. 
+localhost:8001/background-remover FASTAPI answer and call the script.
+The backend is the scrip that create the Response.
+FASTAPI --> return the Response to the FRONTEND;
+------------------------------------------------
+Frontend is an uploading image button -> that call FASTAPI and wait for response(MOST PROBABLY async funct) and show the response with download button
+------------------------------------------------
+Backend 
