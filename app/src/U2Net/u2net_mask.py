@@ -45,7 +45,7 @@ def get_mask(pred,shape):
 def create_mask(image_orig):
 
     # --------- 1. get image path and name ---------
-    model_name='u2net'#u2netp
+    model_name='u2netp'#u2netp
     model_dir = Path(__file__).parent /"saved_models"/model_name/model_name
     model_file = model_dir.with_suffix('.pth')
 
