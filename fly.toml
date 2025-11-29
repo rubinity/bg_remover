@@ -22,6 +22,11 @@ primary_region = 'fra'
   cpus = 1
   memory_mb = 1024
 
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+  disable_machine_ipv6 = true
+
 [[mounts]]
   source = "model_data"
   destination = "/model"
