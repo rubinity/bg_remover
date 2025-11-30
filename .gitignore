@@ -2,6 +2,7 @@ notes.txt
 frontend
 requirementsold*.txt
 ref.md
+fly.toml
 *.jpg
 .venv
 .venv310
