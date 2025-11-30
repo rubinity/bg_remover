@@ -1,0 +1,33 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches: ["api-light"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Copy files to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} "mkdir -p ~/app"
+          rsync -avz --delete --exclude='.git' ./ ubuntu@${{ secrets.SERVER_IP }}:~/app/
+
+      - name: Rebuild and restart container
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
+            cd ~/app
+            docker stop bg_remover || true
+            docker rm bg_remover || true
+            docker build -t bg_remover .
+            docker run -d --name bg_remover -p 80:8000 bg_remover
+          EOF
