@@ -11,6 +11,10 @@ from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 import io
 
+
+
+
+
 app = FastAPI()
 # Allow CORS for all origins (you can restrict to specific domains if needed)
 app.add_middleware(
@@ -52,7 +56,9 @@ def remove_bg(file: bytes):
 
 @app.post("/files/")
 async def create_file(file: Annotated[bytes, File()]):
+    
     upfile = remove_bg(file)
+    
     # with io.BytesIO(file) as stream: #stream
     #     with Image.open(stream) as img:
     #         image_orig = np.array(img)

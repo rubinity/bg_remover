@@ -21,6 +21,13 @@ from .data_loader import SalObjDataset
 
 from .model import U2NET # full size version 173.6 MB
 from .model import U2NETP # small version u2net 4.7 MB
+import psutil, os, tracemalloc, time
+
+process = psutil.Process(os.getpid())
+
+def mem(tag):
+    rss = process.memory_info().rss / (1024 * 1024)
+    print(f"[{tag}]  RAM: {rss:.1f} MB")
 
 # normalize the predicted SOD probability map
 def normPRED(d):
@@ -43,7 +50,7 @@ def get_mask(pred,shape):
     return pb_np
 
 def create_mask(image_orig):
-
+    tracemalloc.start()
     # --------- 1. get image path and name ---------
     model_name='u2netp'#u2netp
     model_dir = Path(__file__).parent /"saved_models"/model_name/model_name
@@ -75,24 +82,30 @@ def create_mask(image_orig):
     else:
         net.load_state_dict(torch.load(model_file, map_location='cpu'))
     net.eval()
+    
 
     # --------- 4. inference for each image ---------
     dl_list = list(test_salobj_dataloader)
     data_test = dl_list[0]
     inputs_test = data_test['image']    #
     inputs_test = inputs_test.type(torch.FloatTensor)
-
     if torch.cuda.is_available():
         inputs_test = Variable(inputs_test.cuda())
     else:
         inputs_test = Variable(inputs_test)
-
-    d1,d2,d3,d4,d5,d6,d7= net(inputs_test)
-
+    mem("before nograd")    
+    with torch.no_grad():
+        d1 = net(inputs_test)[0]
+        mem("after getting d1")
         # normalization
-    pred = d1[:,0,:,:]
-    pred = normPRED(pred)
-
+        pred = d1[:,0,:,:]
+        pred = normPRED(pred)
+    mem("before extracting mask")
     mask = get_mask(pred, image_orig.shape) #returns mask
-    del d1,d2,d3,d4,d5,d6,d7
+    mem("after extracting mask")
+    del d1
+    mem("after deleting d1")
+    current, peak = tracemalloc.get_traced_memory()
+    print(f"Python allocs — current = {current/1e6:.2f} MB, peak = {peak/1e6:.2f} MB")
+    tracemalloc.stop()
     return mask
