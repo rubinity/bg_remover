@@ -1,32 +1,34 @@
 IMAGE_NAME = bg_remover
-
-WORK_DIR = $(CURDIR)
+HOST_PORT = 8080
+CONTAINER_PORT = 8000
 
 all: build run
 
+# Building the Docker image
 build:
 	docker build -t $(IMAGE_NAME) .
 
+# Running the Docker container
 run:
-	docker run -p 8080:8080 -it --name $(IMAGE_NAME)_cont $(IMAGE_NAME)
+	@docker run \
+		-p $(HOST_PORT):$(CONTAINER_PORT) \
+		-it \
+		--name $(IMAGE_NAME)_cont \
+		$(IMAGE_NAME)
+# Running the Docker container (if stopped)
+start:
+	docker start -i $(IMAGE_NAME)_cont
 
-run_dev:
-	docker run --entrypoint bash -v $(WORK_DIR):/usr/src -it $(IMAGE_NAME)
-
-test:
-	docker run --entrypoint bash -it --name $(IMAGE_NAME)_cont $(IMAGE_NAME)
-
-check:
+# Opening a shell in the container
+shell:
 	docker exec -it $(IMAGE_NAME)_cont sh
 
-
+# Deleting the container
 clean:
 	docker rm -f $(IMAGE_NAME)_cont
 
-empty:
-	rm $(CURDIR)/app/output/*.jpg
-
+# Deleting the container and the image
 fclean: clean
 	docker image rm -f $(IMAGE_NAME)
 
-.PHONY: build run run_dev
+.PHONY: build run run_dev shell clean fclean
