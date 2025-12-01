@@ -1,15 +1,21 @@
 # bg_remover
+Smart Image Background Remover (API-based tool)
+
+Demo - https://clearback.netlify.app/
 ## Current state
 Current version removes background using U2Net library and rough thresholding.
 Still to do:
 
-- improve thresholding, using algorithms
+- Improve thresholding with advanced algorithms
 
-- create an API version using FastAPI
+- Add background customization
 
-- add background customization
+- Add user-friendly input for CLI version
 
-- add user friendly input
+- Create a proper UI in a seperate repo
+
+- Experiment with alternative models
+
 
 ---
 
@@ -17,15 +23,21 @@ Note: The first Docker build may take several minutes as it downloads and instal
 
 ---
 ## Table of Contents
-- [bg\_remover](#bg_remover)
   - [Current state](#current-state)
   - [Table of Contents](#table-of-contents)
   - [About](#about)
   - [Installation](#installation)
       - [Windows:](#windows)
+        - [Virtual environment](#virtual-environment)
+        - [Docker:](#docker)
       - [Linux:](#linux)
   - [Usage](#usage)
+      - [Windows:](#windows-1)
+        - [Virtual environment](#virtual-environment-1)
+        - [Docker:](#docker-1)
+      - [Linux:](#linux-1)
   - [Other](#other)
+  - [Reference](#reference)
 
 
 
@@ -36,38 +48,63 @@ Note: The first Docker build may take several minutes as it downloads and instal
 ---
 ## Installation
 
-- ### For virtual environment
-#### Windows:
-- py -3.10 -m venv .venv310
-- .venv310\Scripts\activate
-- pip install -r requirements.txt
-#### Linux:
-- ### using Docker
 
+### Windows:
+#### Virtual environment
+```bash
+# Install Python 3.10 if needed
+# On https://www.python.org/downloads/windows/, search for "Python 3.10.0" and download the Windows x64 installer listed just below that heading and run the installer
+
+# Create virtual environment
+py -3.10 -m venv .venv310
+
+# Activate virtual environment
+.venv310\Scripts\activate
+
+# Upgrade pip (optional but recommended)
+python -m pip install --upgrade pip
+
+# Install dependencies
+pip install -r requirements.txt
+```
+#### Docker
+```bash
+# Build the docker image and run the container
+make all
+```
+#### Linux:
+*(To be added — tested on Windows for now)*
 
 ---
 ## Usage
 
+### Windows:
+#### Virtual environment
+```bash
+# Activate virtual environment
+.venv310\Scripts\activate
+
+# Run the server
+uvicorn app.main:app --host 0.0.0.0 --port 8080
+
+# Access the server at: http://localhost:8080/
+
+# Test the POST API via the interactive docs: http://localhost:8080/docs
+```
+#### Docker
+```bash
+# Build the docker image and run the container
+make run
+
+# Additional commands are available in the Makefile (all are commented).
+```
+### Linux:
+*(To be added — tested on Windows for now)*
+
 ---
 ## Other
 
+## Reference
 
+Based on the original **U²-Net** implementation: [xuebinqin/U-2-Net](https://github.com/xuebinqin/U-2-Net)
 
-## TODOS
--> Entrypoint  which is the app object running using the FastApi() framework
-
-USER -> wants to use your application
------------
--> FRONTEND your website -> CALL API to give behavior.
-Your code which contains the BEHAVIOUR is in python your frontend is in Javascript.
-
-----------------------------------------APP idea
-FRONTEND -----> FASTAPI------ BACKEND
-you can send the image. 
-localhost:8001/background-remover FASTAPI answer and call the script.
-The backend is the scrip that create the Response.
-FASTAPI --> return the Response to the FRONTEND;
-------------------------------------------------
-Frontend is an uploading image button -> that call FASTAPI and wait for response(MOST PROBABLY async funct) and show the response with download button
-------------------------------------------------
-Backend 
