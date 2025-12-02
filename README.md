@@ -50,7 +50,3 @@ Note: The first Docker build may take several minutes as it downloads and instal
 
 ---
 ## Other
-------------------------------------------------
-Frontend is an uploading image button -> that call FASTAPI and wait for response(MOST PROBABLY async funct) and show the response with download button
-------------------------------------------------
-Backend 
