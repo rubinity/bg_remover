@@ -42,7 +42,7 @@ def remove_bg(file: bytes):
         # todo: improve thresholding method 
     return upfile
 
-@app.post("/files/")
+@app.post("/remove-background")
 async def create_file(file: Annotated[bytes, File()]):
     upfile = remove_bg(file)
     return Response(content=upfile, media_type="image/jpeg")
