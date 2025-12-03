@@ -34,7 +34,7 @@ def get_bytes(pil_image):
 def remove_bg(file: bytes):
     pil_file = io.BytesIO(file)
     with Image.open(pil_file) as img:
-        image_orig = np.array(img)
+        image_orig = np.array(img.convert('RGB'))  # numpy array
         img_mask = create_mask(image_orig)  # numpy array
         image_orig[img_mask[:,:,:] < 80] = 255
         pil_image = Image.fromarray(image_orig) #PIL.Image.Image
@@ -45,4 +45,4 @@ def remove_bg(file: bytes):
 @app.post("/remove-background")
 async def create_file(file: Annotated[bytes, File()]):
     upfile = remove_bg(file)
-    return Response(content=upfile, media_type="image/jpeg")
+    return Response(content=upfile, media_type="image/jpeg") 
