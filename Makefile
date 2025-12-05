@@ -1,12 +1,16 @@
 IMAGE_NAME = bg_remover
+IMAGE_GRAFANA = grafana
 HOST_PORT = 8080
 CONTAINER_PORT = 8000
 
 all: build run
 
-# Building the Docker image
+# Building the Docker compose
 build:
-	docker build -t $(IMAGE_NAME) .
+	@docker compose -f docker-compose.yml -p bg_remover up --build
+# 	docker run -d --name=grafana -p 3000:3000 grafana/grafana
+
+# 	docker build -t $(IMAGE_NAME) .
 
 # Running the Docker container
 run:
@@ -25,7 +29,8 @@ shell:
 
 # Deleting the container
 clean:
-	docker rm -f $(IMAGE_NAME)_cont
+# 	docker rm -f $(IMAGE_NAME)_cont
+	docker rm -f bg_remover alloy grafana
 
 # Deleting the container and the image
 fclean: clean

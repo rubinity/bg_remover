@@ -1,0 +1,27 @@
+name: bg_remover
+
+services:
+  app:
+    container_name: bg_remover
+    build: .
+    image: bg_remover
+    ports:
+      - "8080:8000"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+  alloy:
+    image: grafana/alloy:latest
+    container_name: alloy
+    volumes:
+      # Mount your local Alloy config file
+      - ./requirements/alloy:/etc/alloy
+
+      # Mount the Docker socket for service discovery (required)
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "12345:12345"   # only if you're exposing the UI
+    restart: unless-stopped
+
