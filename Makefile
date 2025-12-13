@@ -1,7 +1,7 @@
 IMAGE_NAME = bg_remover
 IMAGE_GRAFANA = grafana
 HOST_PORT = 8080
-CONTAINER_PORT = 8000
+CONTAINER_PORT = 8080
 
 all: build run
 
@@ -23,14 +23,18 @@ run:
 start:
 	docker start -i $(IMAGE_NAME)_cont
 
+stop: 
+	docker compose down
+
 # Opening a shell in the container
 shell:
-	docker exec -it $(IMAGE_NAME)_cont sh
+	docker exec -it $(IMAGE_NAME) sh
+	
 
 # Deleting the container
 clean:
 # 	docker rm -f $(IMAGE_NAME)_cont
-	docker rm -f bg_remover alloy grafana
+	docker rm -f bg_remover grafana prometheus
 
 # Deleting the container and the image
 fclean: clean

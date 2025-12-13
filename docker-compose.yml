@@ -3,25 +3,36 @@ name: bg_remover
 services:
   app:
     container_name: bg_remover
-    build: .
+    build:
+      context: .
+      dockerfile: requirements/app/dockerfile
     image: bg_remover
     ports:
-      - "8080:8000"
+      - "8080:8080"
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    depends_on:
+      - app
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./requirements/prometheus:/etc/prometheus
   grafana:
     container_name: grafana
     image: grafana/grafana:latest
+    depends_on:
+      - prometheus
     ports:
-      - "3000:3000"
-  alloy:
-    image: grafana/alloy:latest
-    container_name: alloy
+      - "3001:3000"
     volumes:
-      # Mount your local Alloy config file
-      - ./requirements/alloy:/etc/alloy
+      - ./requirements/grafana:/etc/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${USER}
+      - GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana_password
+    secrets:
+      - grafana_password
 
-      # Mount the Docker socket for service discovery (required)
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "12345:12345"   # only if you're exposing the UI
-    restart: unless-stopped
-
+secrets:
+  grafana_password:
+    file: ./secrets/grafana.txt
