@@ -1,0 +1,43 @@
+{
+  "title": "Memory",
+  "time": {
+  "from": "now-15m",
+  "to": "now"
+},
+"refresh": "10s",
+"editable": true
+,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Memory",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "targets": [
+        {
+
+        "expr": "before_nograd",
+          "legendFormat": "",
+          "refId": "A",
+          "interval":"5s"
+        },
+         {
+                      
+          "expr": "after_deleting_d1",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ],
+  "schemaVersion": 39,
+  "version": 1
+}

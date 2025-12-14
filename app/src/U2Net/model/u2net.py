@@ -1,6 +1,7 @@
-import torch
+import torch, tracemalloc
 import torch.nn as nn
 import torch.nn.functional as F
+
 
 class REBNCONV(nn.Module):
     def __init__(self,in_ch=3,out_ch=3,dirate=1):
@@ -60,10 +61,8 @@ class RSU7(nn.Module):#UNet07DRES(nn.Module):
         self.rebnconv1d = REBNCONV(mid_ch*2,out_ch,dirate=1)
 
     def forward(self,x):
-
         hx = x
         hxin = self.rebnconvin(hx)
-
         hx1 = self.rebnconv1(hxin)
         hx = self.pool1(hx1)
 
@@ -99,7 +98,6 @@ class RSU7(nn.Module):#UNet07DRES(nn.Module):
         hx2dup = _upsample_like(hx2d,hx1)
 
         hx1d = self.rebnconv1d(torch.cat((hx2dup,hx1),1))
-
         return hx1d + hxin
 
 ### RSU-6 ###

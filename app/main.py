@@ -1,10 +1,12 @@
 from PIL import Image
 import numpy as np
 from .src.U2Net.u2net_mask import create_mask
+from .src.U2Net.mem_calc import process, mem, saved_mem
 from fastapi import APIRouter, FastAPI, File
 from typing import Annotated
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
+# from .src.U2Net.u2net_mask
 import io
 
 app = FastAPI()
@@ -21,6 +23,22 @@ app.add_middleware(
 async def root():
     msg = "The server is running"
     return Response(content=msg)
+
+@app.get("/metrics")
+async def root():
+    # msg = mem("current")
+    # keys=saved_mem.keys()
+    # print(keys)
+    # if keys.i:
+    #     mem_key=keys[0]
+    #     print(mem_key)
+    #     content=mem_key+str(saved_mem[mem_key])
+    content = ""
+    for tag in saved_mem:
+        content = content + tag + " " + str(saved_mem[tag]) + "\n"
+    # else:
+    # content="test 5\nbest 9"
+    return Response(content, media_type="text/plain; version=0.0.4")
 
 # convert PIL image to bytes
 def get_bytes(pil_image):
