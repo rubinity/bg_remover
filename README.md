@@ -7,8 +7,6 @@ Prometheus - http://rubinity.duckdns.org:9090
 
 Grafana - http://rubinity.duckdns.org:3000
 
-http://rubinity.duckdns.org:3000/dashboards
-
 ## Current state
 Current version removes background using U2Net library and rough thresholding.
 Still to do:
@@ -22,11 +20,6 @@ Still to do:
 - Create a proper UI in a seperate repo
 
 - Experiment with alternative models
-
-
----
-
-Note: The first Docker build may take several minutes as it downloads and installs large dependencies (e.g., PyTorch). Subsequent builds will be much faster.
 
 ---
 ## Table of Contents
