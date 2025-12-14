@@ -20,8 +20,7 @@
 
         "expr": "before_nograd",
           "legendFormat": "",
-          "refId": "A",
-          "interval":"5s"
+          "refId": "A"
         },
          {
                       

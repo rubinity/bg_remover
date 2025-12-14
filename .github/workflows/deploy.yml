@@ -22,12 +22,14 @@ jobs:
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} "mkdir -p ~/app"
           rsync -avz --delete --exclude='.git' ./ ubuntu@${{ secrets.SERVER_IP }}:~/app/
 
-      - name: Rebuild and restart container
+      - name: Rebuild and restart containers
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
             cd ~/app
-            docker stop bg_remover || true
-            docker rm bg_remover || true
-            docker build -t bg_remover .
-            docker run -d --name bg_remover -p 80:8000 bg_remover
+            GF_SECURITY_ADMIN_USER="${GF_SECURITY_ADMIN_USER}" \
+            GF_SECURITY_ADMIN_PASSWORD="${GF_SECURITY_ADMIN_PASSWORD}" \
+            docker compose -p bg_remover up -d --build
           EOF
+        env:
+          GF_SECURITY_ADMIN_USER: ${{ secrets.GF_SECURITY_ADMIN_USER }}
+          GF_SECURITY_ADMIN_PASSWORD: ${{ secrets.GF_SECURITY_ADMIN_PASSWORD }}
