@@ -14,3 +14,5 @@ app/src/__pycache__*
 app/src/U2Net/__pycache__*
 app/src/U2Net/model/__pycache__*
 app/src/U2Net/saved_models/u2net/u2net.pth
+.env
+secrets
