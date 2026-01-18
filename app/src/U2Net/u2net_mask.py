@@ -48,22 +48,24 @@ def get_mask(pred,shape):
     return pb_np
 
 def create_mask(image_orig):
-    tracemalloc.start()
     # --------- 1. get image path and name ---------
     model_name='u2netp'#u2netp
     model_dir = Path(__file__).parent /"saved_models"/model_name/model_name
     model_file = model_dir.with_suffix('.pth')
     # --------- 2. dataloader ---------
     #1. dataloader
+    
     test_salobj_dataset = SalObjDataset(file_list = [image_orig],
                                         lbl_name_list = [],
                                         transform=transforms.Compose([RescaleT(320),
                                                                       ToTensorLab(flag=0)])
                                         )
+    # num_workers=0 to avoid extra memory usage from worker processes
+    # can be increased on machines with sufficient RAM
     test_salobj_dataloader = DataLoader(test_salobj_dataset,
                                         batch_size=1,
                                         shuffle=False,
-                                        num_workers=1)
+                                        num_workers=0)
     # --------- 3. model define ---------
     if(model_name=='u2net'):
         print("...load U2NET---173.6 MB")
@@ -78,7 +80,9 @@ def create_mask(image_orig):
         net.load_state_dict(torch.load(model_file, map_location='cpu'))
     net.eval()
     # --------- 4. inference for each image ---------
+    mem("before_list") 
     dl_list = list(test_salobj_dataloader)
+    mem("after_list") 
     data_test = dl_list[0]
     inputs_test = data_test['image']    #
     inputs_test = inputs_test.type(torch.FloatTensor)
@@ -98,7 +102,4 @@ def create_mask(image_orig):
     mem("after_extracting_mask")
     del d1
     mem("after_deleting_d1")
-    current, peak = tracemalloc.get_traced_memory()
-    print(f"Python allocs — current = {current/1e6:.2f} MB, peak = {peak/1e6:.2f} MB")
-    tracemalloc.stop()
     return mask

@@ -1,0 +1,42 @@
+{
+  "title": "Prometheus scrape memory",
+  "time": {
+  "from": "now-6h",
+  "to": "now"
+},
+"refresh": "10s",
+"editable": true,
+"panels": [
+    {
+        "type": "timeseries",
+        "title": "Memory",
+        "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+        "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "decbytes"
+        }
+        },
+      "targets": [
+        {
+        "expr": "process_resident_memory_bytes",
+        "legendFormat": "",
+        "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "x": 0, 
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    }
+  ],
+  "schemaVersion": 39,
+  "version": 1
+}
